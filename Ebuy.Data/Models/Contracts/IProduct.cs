@@ -6,6 +6,8 @@
 
         string  Name { get; set; }
 
+        string BrandName { get; set; }
+
         decimal Price { get; set; }
     }
 }

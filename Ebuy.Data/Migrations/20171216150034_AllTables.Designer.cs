@@ -13,9 +13,10 @@ using System;
 namespace Ebuy.Data.Migrations
 {
     [DbContext(typeof(EbuyDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171216150034_AllTables")]
+    partial class AllTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,7 +129,7 @@ namespace Ebuy.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Ebuy.Data.Models.Products.Product", b =>
+            modelBuilder.Entity("Ebuy.Data.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -150,7 +151,7 @@ namespace Ebuy.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Product");
                 });
@@ -369,9 +370,9 @@ namespace Ebuy.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Ebuy.Data.Models.Camera", b =>
+            modelBuilder.Entity("Ebuy.Data.Models.Products.Camera", b =>
                 {
-                    b.HasBaseType("Ebuy.Data.Models.Products.Product");
+                    b.HasBaseType("Ebuy.Data.Models.Product");
 
                     b.Property<double>("Apperture");
 
@@ -384,9 +385,9 @@ namespace Ebuy.Data.Migrations
                     b.HasDiscriminator().HasValue("Camera");
                 });
 
-            modelBuilder.Entity("Ebuy.Data.Models.Smartphone", b =>
+            modelBuilder.Entity("Ebuy.Data.Models.Products.Smartphone", b =>
                 {
-                    b.HasBaseType("Ebuy.Data.Models.Products.Product");
+                    b.HasBaseType("Ebuy.Data.Models.Product");
 
                     b.Property<int>("Display");
 
@@ -395,9 +396,9 @@ namespace Ebuy.Data.Migrations
                     b.HasDiscriminator().HasValue("Smartphone");
                 });
 
-            modelBuilder.Entity("Ebuy.Data.Models.Tv", b =>
+            modelBuilder.Entity("Ebuy.Data.Models.Products.Tv", b =>
                 {
-                    b.HasBaseType("Ebuy.Data.Models.Products.Product");
+                    b.HasBaseType("Ebuy.Data.Models.Product");
 
                     b.Property<int>("Display")
                         .HasColumnName("Tv_Display");
@@ -418,7 +419,7 @@ namespace Ebuy.Data.Migrations
 
             modelBuilder.Entity("Ebuy.Data.Models.Comment", b =>
                 {
-                    b.HasOne("Ebuy.Data.Models.Products.Product", "Product")
+                    b.HasOne("Ebuy.Data.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
 
@@ -446,7 +447,7 @@ namespace Ebuy.Data.Migrations
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Ebuy.Data.Models.Products.Product", "Product")
+                    b.HasOne("Ebuy.Data.Models.Product", "Product")
                         .WithMany("Buyers")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -472,7 +473,7 @@ namespace Ebuy.Data.Migrations
 
             modelBuilder.Entity("Ebuy.Data.Models.Review", b =>
                 {
-                    b.HasOne("Ebuy.Data.Models.Products.Product", "Product")
+                    b.HasOne("Ebuy.Data.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -492,7 +493,7 @@ namespace Ebuy.Data.Migrations
 
             modelBuilder.Entity("Ebuy.Data.Models.SellerProduct", b =>
                 {
-                    b.HasOne("Ebuy.Data.Models.Products.Product", "Product")
+                    b.HasOne("Ebuy.Data.Models.Product", "Product")
                         .WithMany("Sellers")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
