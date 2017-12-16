@@ -1,15 +1,13 @@
-﻿namespace Ebuy.Web.Common.Extentions
+﻿namespace Ebuy.Web.Infrastructure.Extensions
 {
-    using System;
     using System.Threading.Tasks;
-
+    using Ebuy.Data;
+    using Ebuy.Data.Models;
+    using Ebuy.Web.Common;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-
-    using Ebuy.Data;
-    using Ebuy.Data.Models;
 
     public static class ApplicationBuilderExtensions
     {
@@ -24,8 +22,8 @@
                 {
                     var roles = new[]
                     {
-                        Constants.AdministratorRole,
-                        Constants.ReviewerRole
+                        WebConstants.AdministratorRole,
+                        WebConstants.ReviewerRole
                     };
 
                     foreach (var role in roles)
@@ -60,7 +58,7 @@
 
                         await userManager.CreateAsync(adminUser, "gadmin");
 
-                        await userManager.AddToRoleAsync(adminUser, Constants.AdministratorRole);
+                        await userManager.AddToRoleAsync(adminUser, WebConstants.AdministratorRole);
                         
                     }
 
@@ -77,7 +75,7 @@
 
                         await userManager.CreateAsync(reviewUser, "review");
 
-                        await userManager.AddToRoleAsync(reviewUser, Constants.ReviewerRole);
+                        await userManager.AddToRoleAsync(reviewUser, WebConstants.ReviewerRole);
                     }
                 })
                 .Wait();

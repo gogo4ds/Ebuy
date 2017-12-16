@@ -2,7 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using Ebuy.Data.Models.Products;
 
     public class Review
     {

@@ -1,7 +1,5 @@
 ﻿namespace Ebuy.Data.Models
 {
-    using Ebuy.Data.Models.Products;
-
     public class CustomerProduct
     {
         public int CustomerId { get; set; }

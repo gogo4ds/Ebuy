@@ -35,7 +35,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ebuy.Data\Ebuy.Data.csproj" />
+    <ProjectReference Include="..\Ebuy.Services\Ebuy.Services.csproj" />
     <ProjectReference Include="..\Ebuy.Web.Common\Ebuy.Web.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Products\Controllers\" />
+    <Folder Include="Areas\Products\Data\" />
+    <Folder Include="Areas\Products\Models\" />
+    <Folder Include="Areas\Products\Views\" />
   </ItemGroup>
 
 </Project>

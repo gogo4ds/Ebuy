@@ -1,4 +1,4 @@
-﻿namespace Ebuy.Data.Models.Products
+﻿namespace Ebuy.Data.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

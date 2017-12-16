@@ -1,0 +1,12 @@
+﻿@model List<Ebuy.Web.Areas.Administration.Models.AdminUsersListingViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var user in Model)
+{
+    <h3>@user.Email</h3>
+}

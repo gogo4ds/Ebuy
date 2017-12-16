@@ -14,7 +14,7 @@
     using Ebuy.Web.Services;
     using Ebuy.Data;
     using Ebuy.Data.Models;
-    using Ebuy.Web.Common.Extentions;
+    using Ebuy.Web.Infrastructure.Extensions;
     using Microsoft.AspNetCore.Authentication.Cookies;
 
     public class Startup
@@ -69,6 +69,8 @@
 
             services.AddAutoMapper();
 
+            services.AddDomainServices();
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -101,6 +103,10 @@
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
