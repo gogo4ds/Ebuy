@@ -2,7 +2,7 @@
 {
     public class WebConstants
     {
-        public const string Administration = "Adnimistration";
+        public const string Administration = "Administration";
         public const string Products = "Products";
 
         public const string AdministratorRole = "Administrator";

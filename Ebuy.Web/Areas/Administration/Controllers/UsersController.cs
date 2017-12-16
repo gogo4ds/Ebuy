@@ -9,8 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [Area(WebConstants.Administration)]
-    //[Authorize(Roles = WebConstants.AdministratorRole)]
-
+    [Authorize(Roles = WebConstants.AdministratorRole)]
     public class UsersController : Controller
     {
         private readonly IUsersDataService usersData;
