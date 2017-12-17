@@ -1,5 +1,6 @@
 ﻿namespace Ebuy.Data.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,11 +12,9 @@
         [Required]
         public string Content { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(User))]
         public string UserId { get; set; }
 
-        public User User { get; set; }
+        public User Author { get; set; }
 
         [ForeignKey(nameof(Product))]
         public int? ProductId { get; set; }
@@ -26,5 +25,7 @@
         public int? ReviewId { get; set; }
 
         public Review Review { get; set; }
+
+        public DateTime? CreatedOn { get; set; }
     }
 }

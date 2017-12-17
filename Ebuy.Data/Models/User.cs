@@ -1,5 +1,8 @@
 ﻿namespace Ebuy.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using Microsoft.AspNetCore.Identity;
 
     public class User : IdentityUser
@@ -13,5 +16,9 @@
         //public DateTime? Birthdate { get; set; }
 
         //public byte[] ProfilePicture { get; set; }
+
+        public List<Comment> Comments { get; set; } = new List<Comment>();
+
+        public List<Review> Reviews { get; set; } = new List<Review>();
     }
 }

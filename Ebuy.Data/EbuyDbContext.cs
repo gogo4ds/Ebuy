@@ -4,7 +4,6 @@
     using Microsoft.EntityFrameworkCore;
 
     using Ebuy.Data.Models;
-    using Ebuy.Data.Models.Products;
 
     public class EbuyDbContext : IdentityDbContext<User>
     {
@@ -64,6 +63,18 @@
                 .HasOne(cp => cp.Product)
                 .WithMany(p => p.Buyers)
                 .HasForeignKey(cp => cp.ProductId);
+
+            builder
+                .Entity<Comment>()
+                .HasOne(c => c.Author)
+                .WithMany(a => a.Comments)
+                .HasForeignKey(c => c.UserId);
+
+            builder
+                .Entity<Review>()
+                .HasOne(r => r.Author)
+                .WithMany(a => a.Reviews)
+                .HasForeignKey(r => r.UserId);
 
             base.OnModelCreating(builder);
         }

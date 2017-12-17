@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Ebuy.Web.Common
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Ebuy.Web</title>
+    <title>@ViewData["Title"] - ebuy</title>
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -26,14 +27,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Ebuy.Web</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ebuy</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="Administration" asp-controller="Users" asp-action="Index">Users</a></li>
+                    @if (User.IsInRole(WebConstants.AdministratorRole))
+                    {
+                        <li><a asp-area="Administration" asp-controller="Users" asp-action="Index">Users</a></li>
+                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -43,7 +47,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - Ebuy.Web</p>
+            <p>&copy; 2017 - ebuy</p>
         </footer>
     </div>
 
