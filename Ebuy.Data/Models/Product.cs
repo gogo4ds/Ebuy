@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Ebuy.Data.Models.Contracts;
 
     public class Product : IProduct
@@ -20,6 +21,11 @@
         public byte[] Picture { get; set; }
 
         public double? Rating { get; set; }
+
+        [ForeignKey(nameof(Category))]
+        public int CategoryId { get; set; }
+
+        public ProductCategory Category { get; set; }
 
         public List<SellerProduct> Sellers { get; set; } = new List<SellerProduct>();
 

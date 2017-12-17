@@ -7,5 +7,8 @@
 
         public const string AdministratorRole = "Administrator";
         public const string ReviewerRole = "Reviewer";
+
+        public const string TempDataSuccessMessageKey = "SuccessMessage";
+        public const string TempDataErrorMessageKey = "ErrorMessage";
     }
 }

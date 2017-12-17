@@ -11,9 +11,10 @@ using System;
 namespace Ebuy.Data.Migrations
 {
     [DbContext(typeof(EbuyDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171217141037_AddedCategories")]
+    partial class AddedCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -456,7 +457,7 @@ namespace Ebuy.Data.Migrations
                     b.HasOne("Ebuy.Data.Models.ProductCategory", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Ebuy.Data.Models.ProductCategory", b =>
@@ -464,7 +465,7 @@ namespace Ebuy.Data.Migrations
                     b.HasOne("Ebuy.Data.Models.ProductCategory", "Parent")
                         .WithMany()
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Ebuy.Data.Models.Review", b =>

@@ -76,6 +76,12 @@
                 .WithMany(a => a.Reviews)
                 .HasForeignKey(r => r.UserId);
 
+            builder.Entity<ProductCategory>()
+                .HasOne(p => p.Parent)
+                .WithMany(p => p.Children)
+                .HasForeignKey(p => p.ParentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
     }
