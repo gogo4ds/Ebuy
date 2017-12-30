@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ProductCategory
+    public class Category
     {
         [Key]
         public int Id { get; set; }
@@ -15,10 +15,10 @@
 
         public int ParentId { get; set; }
 
-        public ProductCategory Parent { get; set; }
+        public Category Parent { get; set; }
 
         [InverseProperty(nameof(Parent))]
-        public List<ProductCategory> Children { get; set; } = new List<ProductCategory>();
+        public List<Category> Children { get; set; } = new List<Category>();
 
         public int Order { get; set; }
 

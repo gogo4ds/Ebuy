@@ -1,10 +1,8 @@
 ﻿namespace Ebuy.Services.Data.Users
 {
-    using System.Linq;
     using Ebuy.Data.Models;
 
-    public interface IUsersDataService : IService
+    public interface IUsersDataService : IDataService<User>
     {
-        IQueryable<User> GetAll();
     }
 }

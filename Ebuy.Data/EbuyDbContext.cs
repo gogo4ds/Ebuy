@@ -14,6 +14,8 @@
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<Category> Categories { get; set; }
+
         public DbSet<Seller> Sellers { get; set; }
 
         public DbSet<Customer> Customers { get; set; }
@@ -76,7 +78,7 @@
                 .WithMany(a => a.Reviews)
                 .HasForeignKey(r => r.UserId);
 
-            builder.Entity<ProductCategory>()
+            builder.Entity<Category>()
                 .HasOne(p => p.Parent)
                 .WithMany(p => p.Children)
                 .HasForeignKey(p => p.ParentId)

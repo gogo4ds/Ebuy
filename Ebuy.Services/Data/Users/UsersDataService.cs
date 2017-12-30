@@ -1,18 +1,13 @@
 ﻿namespace Ebuy.Services.Data.Users
 {
-    using System.Linq;
     using Ebuy.Data;
     using Ebuy.Data.Models;
 
-    public class UsersDataService : IUsersDataService
+    public class UsersDataService : BaseDataService<User>, IUsersDataService
     {
-        private readonly EbuyDbContext context;
-
         public UsersDataService(EbuyDbContext context)
+            : base(context)
         {
-            this.context = context;
         }
-
-        public IQueryable<User> GetAll() => this.context.Users;
     }
 }

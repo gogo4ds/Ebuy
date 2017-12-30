@@ -25,7 +25,7 @@
         [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
 
-        public ProductCategory Category { get; set; }
+        public Category Category { get; set; }
 
         public List<SellerProduct> Sellers { get; set; } = new List<SellerProduct>();
 

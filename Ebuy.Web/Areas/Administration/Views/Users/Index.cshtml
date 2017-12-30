@@ -18,11 +18,13 @@
             var count = 1;
             foreach (var user in Model)
             {
-                <tr>
-                    <th scope="row">@(count++)</th>
-                    <td>@user.UserName</td>
-                    <td>@user.Email</td>
-                </tr>
+        <tr>
+            <th scope="row">@(count++)</th>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>@user.Email</td>
+            <td><button class="btn-default">Edit</button></td>
+        </tr>
             }
         }
     </tbody>
