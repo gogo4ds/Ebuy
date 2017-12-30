@@ -1,6 +1,12 @@
 ﻿namespace Ebuy.Services.Data.Categories
 {
-    public class CategoriesDataService : ICategoriesDataService
+    using Ebuy.Data;
+    using Ebuy.Data.Models;
+
+    public class CategoriesDataService : BaseDataService<Category>, ICategoriesDataService
     {
+        public CategoriesDataService(EbuyDbContext context) : base(context)
+        {
+        }
     }
 }

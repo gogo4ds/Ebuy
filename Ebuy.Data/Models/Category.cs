@@ -13,7 +13,7 @@
         [MaxLength(100)]
         public string Name { get; set; }
 
-        public int ParentId { get; set; }
+        public int? ParentId { get; set; }
 
         public Category Parent { get; set; }
 

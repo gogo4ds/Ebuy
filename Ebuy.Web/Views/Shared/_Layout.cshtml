@@ -1,4 +1,8 @@
-﻿@using Ebuy.Web.Common
+﻿@using Ebuy.Services.Data.Categories
+@using Ebuy.Web.Common
+
+@inject ICategoriesDataService CategoriesData
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,14 +40,20 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     @if (User.IsInRole(WebConstants.AdministratorRole))
                     {
-                        <li><a asp-area="Administration" asp-controller="Users" asp-action="Index">Users</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="Administration" asp-controller="Users" asp-action="Index">Users</a></li>
+                            </ul>
+                        </li>
                     }
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a asp-controller="Products" asp-action="Cloud">Electronics</a></li>
-                            <li><a asp-controller="Products" asp-action="Cloud">Books</a></li>
-                            <li><a asp-controller="Products" asp-action="Cloud">Home</a></li>
+                            @foreach (var category in CategoriesData.GetAll().Where(c => c.Parent == null))
+                            {
+                                <li><a asp-area="Products" asp-controller="Categories" asp-action="Products" asp-route-id="@category.Id">@category.Name</a></li>
+                            }
                         </ul>
                     </li>
                 </ul>
