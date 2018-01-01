@@ -1,0 +1,30 @@
+﻿@model CategoryDeleteViewModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<form asp-action="Delete" asp-controller="Categories" asp-area="Administration" method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+
+        <label asp-for="Name">Name</label>
+        <input class="form-control" asp-for="Name" value="@Model.Name" disabled="disabled" />
+        <input type="hidden" asp-for="Name" value="@Model.Name" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Children">Child categories</label>
+        <ul>
+            @foreach (var child in Model.Children)
+            {
+                <li>@child.Name</li>
+            }
+        </ul>
+    </div>
+
+    <input type="submit" class="btn btn-danger" value="Delete" />
+    <a asp-action="Index" asp-controller="Categories" asp-area="Products" class="btn btn-default">Cancel</a>
+</form>

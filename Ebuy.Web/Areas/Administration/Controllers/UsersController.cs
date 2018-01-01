@@ -3,14 +3,10 @@
     using System.Linq;
     using AutoMapper.QueryableExtensions;
     using Ebuy.Services.Data.Users;
-    using Ebuy.Web.Areas.Administration.Models;
-    using Ebuy.Web.Common;
-    using Microsoft.AspNetCore.Authorization;
+    using Ebuy.Web.Areas.Administration.Models.Users;
     using Microsoft.AspNetCore.Mvc;
-
-    [Area(WebConstants.Administration)]
-    [Authorize(Roles = WebConstants.AdministratorRole)]
-    public class UsersController : Controller
+    
+    public class UsersController : AdministrationBaseController
     {
         private readonly IUsersDataService usersData;
 

@@ -44,6 +44,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a asp-area="Administration" asp-controller="Users" asp-action="Index">Users</a></li>
+                                <li><a asp-area="Administration" asp-controller="Categories" asp-action="Index">Categories</a></li>
                             </ul>
                         </li>
                     }
@@ -54,6 +55,8 @@
                             {
                                 <li><a asp-area="Products" asp-controller="Categories" asp-action="Products" asp-route-id="@category.Id">@category.Name</a></li>
                             }
+
+                            <li class="btn-link"><a asp-area="Products" asp-controller="Categories" asp-action="Index">All</a></li>
                         </ul>
                     </li>
                 </ul>

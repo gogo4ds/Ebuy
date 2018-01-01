@@ -2,9 +2,13 @@
 {
     using System.Linq;
 
-    public interface IDataService<out TModel> : IService
+    public interface IDataService<TModel> : IService
         where TModel : class, new()
     {
         IQueryable<TModel> GetAll();
+
+        void Update(TModel entity);
+
+        void Delete(TModel entity);
     }
 }

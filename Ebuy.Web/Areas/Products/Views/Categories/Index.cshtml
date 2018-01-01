@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Ebuy.Data.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Categories</h2>
+
+@if (User.IsInRole(WebConstants.AdministratorRole))
+{
+    <a class="btn btn-primary" asp-action="Create" asp-controller="Categories" asp-area="Administration">Create New</a>
+    <br/>
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+    </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var category in Model)
+            {
+                <tr>
+                    <td><a asp-area="Products" asp-controller="Categories" asp-action="Products" asp-route-id="@category.Id">@category.Name</a></td>
+                    @if (this.User.IsInRole(WebConstants.AdministratorRole))
+                    {
+                        <td><a class="btn btn-default" asp-area="Administration" asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id">Edit</a></td>
+                        <td><a class="btn btn-danger" asp-area="Administration" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id">Delete</a></td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>

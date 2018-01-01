@@ -1,4 +1,4 @@
-﻿namespace Ebuy.Web.Areas.Administration.Models
+﻿namespace Ebuy.Web.Areas.Administration.Models.Users
 {
     using Ebuy.Data.Models;
     using Ebuy.Web.Infrastructure.Mapping;
