@@ -4,5 +4,29 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>Add new product to the category <strong>@Model.CategoryName</strong></h2>
+<form asp-action="Create" asp-controller="Products" asp-area="Products" method="post">
+    <input type="hidden" asp-for="CategoryId"/>
+    <input type="hidden" asp-for="CategoryName"/>
 
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="BrandName">Brand</label>
+        <input class="form-control" asp-for="BrandName" />
+        <span asp-validation-for="BrandName"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price">Price</label>
+        <input class="form-control" asp-for="Price" />
+        <span asp-validation-for="Price"></span>
+        <br />
+    </div>
+
+    <input type="submit" class="btn btn-success" value="Create"/>
+</form>

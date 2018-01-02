@@ -1,6 +1,8 @@
 ﻿namespace Ebuy.Services.Data
 {
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using System.Reflection;
     using Ebuy.Data;
     using Ebuy.Data.Models;
     using Microsoft.EntityFrameworkCore;
@@ -29,6 +31,35 @@
         public void Delete(TModel entity)
         {
             this.Repository.Remove(entity);
+            this.Context.SaveChanges();
+        }
+
+        public void AddOrUpdate(TModel entity)
+        {
+            var t = typeof(TModel);
+            PropertyInfo keyField = null;
+            foreach (var propt in t.GetProperties())
+            {
+                var keyAttr = propt.GetCustomAttribute<KeyAttribute>();
+                if (keyAttr != null)
+                {
+                    keyField = propt;
+                    break; // assume no composite keys
+                }
+            }
+
+            var keyVal = keyField?.GetValue(entity);
+            var dbVal = this.Repository.Find(keyVal);
+
+            if (dbVal == null)
+            {
+                this.Repository.Add(entity);
+            }
+            else
+            {
+                this.Repository.Update(entity);
+            }
+            
             this.Context.SaveChanges();
         }
 

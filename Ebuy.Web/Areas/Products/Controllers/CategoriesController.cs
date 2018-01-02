@@ -5,6 +5,7 @@
     using Ebuy.Services.Data.Categories;
     using Ebuy.Services.Data.Products;
     using Ebuy.Web.Areas.Products.Models;
+    using Ebuy.Web.Areas.Products.Models.Categories;
     using Ebuy.Web.Common;
     using Ebuy.Web.Controllers;
     using Microsoft.AspNetCore.Mvc;
@@ -29,11 +30,12 @@
 
         public IActionResult Products(int id)
         {
-            var products = this.productsData
-                .GetAllByCategoryId(id)
-                .ProjectTo<ProductViewModel>();
+            var model = this.categoriesData
+                .GetByIdQuery(id)
+                .ProjectTo<CategoryProductsViewModel>()
+                .FirstOrDefault();
 
-            return this.View(products);
+            return this.View(model);
         }
     }
 }

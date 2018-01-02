@@ -10,5 +10,7 @@
         void Update(TModel entity);
 
         void Delete(TModel entity);
+
+        void AddOrUpdate(TModel entity);
     }
 }

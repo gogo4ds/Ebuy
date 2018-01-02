@@ -6,7 +6,7 @@
     {
         public IActionResult RedirectToHome()
         {
-            return this.RedirectToAction(nameof(HomeController.Index), "Home");
+            return this.RedirectToAction(nameof(HomeController.Index), "Home", new {area = string.Empty});
         }
     }
 }

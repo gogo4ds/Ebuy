@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@model CategoryProductsViewModel
 
 @{
     ViewData["Title"] = "Products";
@@ -6,18 +6,24 @@
 
 <h2>Products</h2>
 
+<a class="btn btn-primary" asp-action="Create" asp-controller="Products" asp-area="Products" asp-route-categoryId="@Model.CategoryId">Add new product</a>
+
 <table class="table">
     <thead>
     <tr>
         <th scope="col">Product Name</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Price</th>
     </tr>
     </thead>
     <tbody>
     @{
-        foreach (var product in Model)
+        foreach (var product in Model.Products)
         {
             <tr>
                 <td>@product.Name</td>
+                <td>@product.BrandName</td>
+                <td>$@product.Price</td>
             </tr>
         }
     }
