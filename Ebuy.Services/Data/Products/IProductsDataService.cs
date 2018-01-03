@@ -6,5 +6,7 @@
     public interface IProductsDataService : IDataService<Product>
     {
         IQueryable<Product> GetAllByCategoryId(int categoryId);
+
+        Product GetById(int productId);
     }
 }

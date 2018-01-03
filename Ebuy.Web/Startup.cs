@@ -64,6 +64,8 @@
                 });
 
             services.AddMvc(options => options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>());
+            services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
+            services.AddSession();
 
             services.AddRouting(routing => routing.LowercaseUrls = true);
 
@@ -100,6 +102,8 @@
             app.UseAuthentication();
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

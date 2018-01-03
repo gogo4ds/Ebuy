@@ -24,6 +24,11 @@
                 <td>@product.Name</td>
                 <td>@product.BrandName</td>
                 <td>$@product.Price</td>
+                <td>
+                    <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@product.Id" method="post">
+                        <input type="submit" value="Add to cart" class="btn btn-primary"/>
+                    </form>
+                </td>
             </tr>
         }
     }

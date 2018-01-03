@@ -7,6 +7,8 @@
 
     public class ProductViewModel : IMapFrom<Product>, IHaveCustomMapping
     {
+        public int Id { get; set; }
+
         [MinLength(2), MaxLength(100)]
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
