@@ -59,6 +59,7 @@
                             <li class="btn-link"><a asp-area="Products" asp-controller="Categories" asp-action="Index">All</a></li>
                         </ul>
                     </li>
+                    <li><a asp-action="Index" asp-controller="ShoppingCart" asp-area="Products"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -67,6 +68,7 @@
 <div class="container body-content">
     @if (TempData.ContainsKey(WebConstants.TempDataSuccessMessageKey))
     {
+        <br/>
         <div class="alert alert-success">
             @TempData[WebConstants.TempDataSuccessMessageKey]
         </div>
@@ -74,8 +76,17 @@
 
     @if (TempData.ContainsKey(WebConstants.TempDataErrorMessageKey))
     {
+        <br/>
         <div class="alert alert-danger">
             @TempData[WebConstants.TempDataErrorMessageKey]
+        </div>
+    }
+    
+    @if (TempData.ContainsKey(WebConstants.TempDataInfoMessageKey))
+    {
+        <br/>
+        <div class="alert alert-info">
+            @TempData[WebConstants.TempDataInfoMessageKey]
         </div>
     }
 

@@ -7,6 +7,7 @@
     using Ebuy.Web.Common;
     using Ebuy.Web.Common.Extensions;
     using Ebuy.Web.Controllers;
+    using Microsoft.ApplicationInsights.AspNetCore.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,21 @@
         {
             this.productsData = productsData;
             this.userManager = userManager;
+        }
+
+        public IActionResult Index()
+        {
+            var cart = this.HttpContext.Session
+                .GetObjectFromJson<ShoppingCartViewModel>(WebConstants.ShoppingCartSessionKey);
+
+            if (cart == null || cart.CartItems.Count == 0)
+            {
+                var returnUrl = this.HttpContext.Request.Headers["Referer"].ToString();
+                this.TempData.AddInfoMessage("The Shopping Cart is empty");
+                return this.Redirect(returnUrl);
+            }
+
+            return this.View(cart);
         }
 
         [HttpPost]
