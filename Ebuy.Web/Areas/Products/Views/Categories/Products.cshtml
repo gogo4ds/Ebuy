@@ -17,20 +17,23 @@
     </tr>
     </thead>
     <tbody>
-    @{
-        foreach (var product in Model.Products)
-        {
-            <tr>
-                <td>@product.Name</td>
-                <td>@product.BrandName</td>
-                <td>$@product.Price</td>
-                <td>
-                    <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@product.Id" method="post">
-                        <input type="submit" value="Add to cart" class="btn btn-primary"/>
-                    </form>
-                </td>
-            </tr>
-        }
+    
+    @foreach (var product in Model.Products)
+    {
+        <tr>
+            <td><a asp-action="Details" asp-controller="Products" asp-area="Products" asp-route-id="@product.Id">@product.Name</a></td>
+            <td>@product.BrandName</td>
+            <td>$@product.Price</td>
+            <td>
+                <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@product.Id" method="post">
+                    <input type="submit" value="Add to cart" class="btn btn-primary"/>
+                </form>
+            </td>
+            <td>
+                <a asp-action="Details" asp-controller="Products" asp-area="Products" asp-route-id="@product.Id" class="btn btn-block">View</a>
+            </td>
+        </tr>
     }
+
     </tbody>
 </table>

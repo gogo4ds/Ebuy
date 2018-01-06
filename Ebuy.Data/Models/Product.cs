@@ -19,7 +19,7 @@
 
         public decimal Price { get; set; }
 
-        public string ImageName { get; set; }
+        public List<ProductImage> Images { get; set; } = new List<ProductImage>();
 
         [MaxLength(1000)]
         public string Description { get; set; }

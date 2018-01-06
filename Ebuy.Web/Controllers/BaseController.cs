@@ -4,9 +4,15 @@
 
     public class BaseController : Controller
     {
-        public IActionResult RedirectToHome()
+        public IActionResult RedirectToHome() =>
+            this.RedirectToAction(nameof(HomeController.Index), "Home", new {area = string.Empty});
+
+        public IActionResult RedirectBack()
         {
-            return this.RedirectToAction(nameof(HomeController.Index), "Home", new {area = string.Empty});
+            var returnUrl = this.HttpContext.Request.Headers["Referer"].ToString();
+            return string.IsNullOrWhiteSpace(returnUrl)
+                ? this.RedirectToHome()
+                : this.Redirect(returnUrl);
         }
     }
 }

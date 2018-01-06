@@ -34,10 +34,9 @@
                 .GetObjectFromJson<ShoppingCartViewModel>(WebConstants.ShoppingCartSessionKey);
 
             if (cart == null || cart.CartItems.Count == 0)
-            {
-                var returnUrl = this.HttpContext.Request.Headers["Referer"].ToString();
+            {               
                 this.TempData.AddInfoMessage("The Shopping Cart is empty");
-                return this.Redirect(returnUrl);
+                return this.RedirectBack();
             }
 
             return this.View(cart);

@@ -1,6 +1,8 @@
 ﻿namespace Ebuy.Web.Areas.Products.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using AutoMapper;
     using Ebuy.Data.Models;
     using Ebuy.Web.Infrastructure.Mapping;
@@ -33,7 +35,7 @@
         [StringLength(1000)]
         public string Description { get; set; }
 
-        public string ImageName { get; set; }
+        public List<string> ImageNames { get; set; }
 
         public void ConfigureMapping(Profile mapper)
         {
@@ -44,6 +46,10 @@
             mapper
                 .CreateMap<Product, ProductViewModel>()
                 .ForMember(m => m.SellerUserName, opt => opt.MapFrom(p => p.Seller.User.UserName));
+
+            mapper
+                .CreateMap<Product, ProductViewModel>()
+                .ForMember(m => m.ImageNames, opt => opt.MapFrom(p => p.Images.Select(i => i.Image.Title)));
         }
     }
 }

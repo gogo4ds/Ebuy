@@ -5,3 +5,24 @@
 }
 
 <h2>Details for product: @Model.Name</h2>
+<br/>
+<form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@Model.Id" method="post">
+    <input type="submit" value="Add to cart" class="btn btn-success text-uppercase" />
+</form>
+
+<div class="row">
+    <div class="col-xs-6">
+        <h3>@Model.Name</h3>
+    </div>
+    <p>@Model.Description</p>
+</div>
+<br/>
+
+@if (Model.SellerUserName == this.User.Identity.Name || this.User.IsAdmin())
+{
+    <div class="row">
+        <a class="btn btn-primary col-xs-1" asp-action="Edit" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Id">Edit</a>
+        <span class="col-xs-1"></span>
+        <a class="text-danger btn col-xs-1" asp-action="Delete" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Id">Delete</a>
+    </div>
+}

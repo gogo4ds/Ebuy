@@ -14,8 +14,8 @@
     using Ebuy.Web.Controllers;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Net.Http.Headers;
 
     [Area(WebConstants.Products)]
@@ -25,20 +25,17 @@
         private readonly ICategoriesDataService categoriesData;
         private readonly ISellersDataService sellersData;
         private readonly IHostingEnvironment appEnvironment;
-        private readonly UserManager<User> userManager;
 
         public ProductsController(
             IProductsDataService productsData,
             ICategoriesDataService categoriesData,
             ISellersDataService sellersData,
-            IHostingEnvironment appEnvironment,
-            UserManager<User> userManager)
+            IHostingEnvironment appEnvironment)
         {
             this.productsData = productsData;
             this.categoriesData = categoriesData;
             this.sellersData = sellersData;
             this.appEnvironment = appEnvironment;
-            this.userManager = userManager;
         }
 
         public IActionResult Index()
@@ -100,32 +97,42 @@
 
             await this.productsData.AddOrUpdateAsync(product);
 
-            var image = this.HttpContext.Request.Form.Files.FirstOrDefault();
+            var files = this.HttpContext.Request.Form.Files;
 
-            if (image != null && image.Length > 0)
+            var counter = 1;
+            foreach (var image in files)
             {
-                var file = image;
-                var uploads = Path.Combine(this.appEnvironment.WebRootPath, "uploads\\img\\products");
+                if (image != null && image.Length > 0)
+                {
+                    var file = image;
+                    var uploads = Path.Combine(this.appEnvironment.WebRootPath, "uploads\\img\\products");
 
-                if (file.Length > 0)
-                {                    
-                    var fileName = ContentDispositionHeaderValue.Parse
-                        (file.ContentDisposition).FileName.Value;
-
-                    fileName = fileName.Substring(1, fileName.Length - 2);
-                    var indexOfLastDot = fileName.LastIndexOf('.');
-                    var fileExtension = fileName.Substring(indexOfLastDot, fileName.Length - indexOfLastDot).ToLower();
-
-                    var modifiedFileName = $"{product.Id}-{product.Name}{fileExtension}";
-
-                    using (var fileStream = new FileStream(Path.Combine(uploads, modifiedFileName), FileMode.Create))
+                    if (file.Length > 0)
                     {
-                        await file.CopyToAsync(fileStream);
-                    }
+                        var fileName = ContentDispositionHeaderValue.Parse
+                            (file.ContentDisposition).FileName.Value;
 
-                    product.ImageName = modifiedFileName;
+                        fileName = fileName.Substring(1, fileName.Length - 2);
+                        var indexOfLastDot = fileName.LastIndexOf('.');
+                        var fileExtension = fileName.Substring(indexOfLastDot, fileName.Length - indexOfLastDot).ToLower();
+
+                        var modifiedFileName = $"{counter++}-{product.Id}-{product.Name}{fileExtension}";
+
+                        using (var fileStream = new FileStream(Path.Combine(uploads, modifiedFileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+
+                        var img = new Image { Title = modifiedFileName };
+
+                        product.Images.Add(new ProductImage
+                        {
+                            Image = img,
+                            Product = product
+                        });
+                    }
                 }
-            }
+            }           
 
             await this.productsData.UpdateAsync(product);
 
@@ -133,9 +140,12 @@
             return this.RedirectToHome();
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {           
-            var product = this.productsData.GetByIdQuery(id).ProjectTo<ProductViewModel>().FirstOrDefault();
+            var product = await this.productsData
+                .GetByIdQuery(id)
+                .ProjectTo<ProductViewModel>()
+                .FirstOrDefaultAsync();
 
             if (product == null)
             {
@@ -143,7 +153,7 @@
                 return this.RedirectToHome();
             }
 
-            if (product.SellerUserName != this.User.Identity.Name)
+            if (product.SellerUserName != this.User.Identity.Name && !this.User.IsAdmin())
             {
                 this.TempData.AddErrorMessage(WebConstants.NoPrivillegesMessage);
                 return this.RedirectToAction("Details", "Products", new {area = "Products"});
@@ -161,25 +171,63 @@
                 return this.RedirectToHome();
             }
 
-            if (model.SellerUserName != this.User.Identity.Name)
+            if (model.SellerUserName != this.User.Identity.Name && !this.User.IsAdmin())
             {
                 this.TempData.AddErrorMessage(WebConstants.NoPrivillegesMessage);
                 return this.RedirectToAction("Details", "Products", new { area = "Products" });
             }
 
-            var file = new FileInfo(Path.Combine(this.appEnvironment.WebRootPath, model.ImageName));
-
-            await file.DeleteAsync();
+            foreach (var imageName in model.ImageNames)
+            {
+                var file = new FileInfo(Path.Combine(this.appEnvironment.WebRootPath, imageName));
+                await file.DeleteAsync();
+            }
+           
             await this.productsData.DeleteByIdAsync(model.Id);
 
             this.TempData.AddSuccessMessage("Product deleted successfully!");
             return this.RedirectToAction("Products", "Categories", new {area = "Products"});
         }
 
-        public IActionResult Details(int id) =>
-            this.View(this.productsData
+        public async Task<IActionResult> Details(int id) =>
+            this.View(await this.productsData
                 .GetByIdQuery(id)
                 .ProjectTo<ProductViewModel>()
-                .FirstOrDefault());
+                .FirstOrDefaultAsync());
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await this.productsData
+                .GetByIdQuery(id)
+                .ProjectTo<ProductViewModel>()
+                .FirstOrDefaultAsync();
+
+            if (product == null || product.SellerUserName != this.User.Identity.Name && !this.User.IsAdmin())
+            {
+                this.TempData.AddErrorMessage(WebConstants.NoPrivillegesMessage);
+                return this.RedirectBack();
+            }
+
+            return this.View(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ProductViewModel model)
+        {
+            if (model?.Id == null)
+            {
+                this.TempData.AddErrorMessage("Invalid product");
+                return this.RedirectBack();
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+            //TODO: finish the edit method
+
+            return this.RedirectToAction("Details", "Products", new {id = model.Id});
+        }
     }
 }

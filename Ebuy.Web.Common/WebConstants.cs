@@ -14,6 +14,6 @@
 
         public const string ShoppingCartSessionKey = "#%ShoppingCart%#";
 
-        public const string NoPrivillegesMessage = "You have no privilegues for this action";
+        public const string NoPrivillegesMessage = "You have no privileges for this action!";
     }
 }

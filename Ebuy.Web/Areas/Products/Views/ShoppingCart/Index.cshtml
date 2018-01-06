@@ -24,10 +24,10 @@
         {
             <div class="product">
                 <div class="product-image">
-                    <img src="~/uploads/img/products/@item.Product.ImageName">
+                    <img src="~/uploads/img/products/@item.Product.Images.FirstOrDefault()?.Image.Title" alt="Product image">
                 </div>
                 <div class="product-details">
-                    <div class="product-title">@item.Product.Name</div>
+                    <div class="product-title"><a asp-action="Details" asp-controller="Products" asp-area="Products" asp-route-id="@item.Product.Id">@item.Product.Name</a></div>
                     <p class="product-description">@item.Product.Description</p>
                 </div>
                 <div class="product-price">@item.Price</div>
