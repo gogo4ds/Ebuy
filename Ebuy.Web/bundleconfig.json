@@ -20,5 +20,17 @@
     },
     // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/shopping-cart.js",
+    "inputFiles": [
+      "wwwroot/js/shopping-cart.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/shopping-cart.css",
+    "inputFiles": [
+      "wwwroot/css/shopping-cart.css"
+    ]
   }
 ]

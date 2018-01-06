@@ -20,6 +20,9 @@
 
         public byte[] Picture { get; set; }
 
+        [MaxLength(1000)]
+        public string Description { get; set; }
+
         public double? Rating { get; set; }
 
         [ForeignKey(nameof(Category))]

@@ -7,8 +7,12 @@
     {
         public int UserId { get; set; }
 
-        public IList<CartItem> CartItems { get; set; } = new List<CartItem>();
+        public IList<CartItem> CartItems { get; set; } = new List<CartItem>();        
 
-        public decimal TotalPrice => this.CartItems.Sum(ci => ci.Price);
+        public decimal SubTotal => this.CartItems.Sum(ci => ci.Price);
+
+        public decimal ShippingPrice { get; set; }
+
+        public decimal TotalPrice => this.SubTotal + this.ShippingPrice;
     }
 }
