@@ -11,9 +11,10 @@ using System;
 namespace Ebuy.Data.Migrations
 {
     [DbContext(typeof(EbuyDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180106172215_ImageName")]
+    partial class ImageName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,17 +168,11 @@ namespace Ebuy.Data.Migrations
 
                     b.Property<decimal>("Price");
 
-                    b.Property<int>("QuantityInStock");
-
                     b.Property<double?>("Rating");
-
-                    b.Property<int>("SellerId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("SellerId");
 
                     b.ToTable("Products");
                 });
@@ -224,6 +219,21 @@ namespace Ebuy.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Sellers");
+                });
+
+            modelBuilder.Entity("Ebuy.Data.Models.SellerProduct", b =>
+                {
+                    b.Property<int>("SellerId");
+
+                    b.Property<int>("ProductId");
+
+                    b.Property<bool>("IsInStock");
+
+                    b.HasKey("SellerId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("SellerProducts");
                 });
 
             modelBuilder.Entity("Ebuy.Data.Models.User", b =>
@@ -459,11 +469,6 @@ namespace Ebuy.Data.Migrations
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Ebuy.Data.Models.Seller", "Seller")
-                        .WithMany("Products")
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Ebuy.Data.Models.Review", b =>
@@ -487,6 +492,19 @@ namespace Ebuy.Data.Migrations
                     b.HasOne("Ebuy.Data.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Ebuy.Data.Models.SellerProduct", b =>
+                {
+                    b.HasOne("Ebuy.Data.Models.Product", "Product")
+                        .WithMany("Sellers")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Ebuy.Data.Models.Seller", "Seller")
+                        .WithMany("Products")
+                        .HasForeignKey("SellerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

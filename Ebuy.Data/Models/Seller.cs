@@ -22,6 +22,6 @@
 
         public List<Order> Orders { get; set; }
 
-        public List<SellerProduct> Products { get; set; } = new List<SellerProduct>();
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 }

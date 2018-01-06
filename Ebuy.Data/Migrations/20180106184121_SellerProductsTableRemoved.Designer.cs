@@ -11,9 +11,10 @@ using System;
 namespace Ebuy.Data.Migrations
 {
     [DbContext(typeof(EbuyDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180106184121_SellerProductsTableRemoved")]
+    partial class SellerProductsTableRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -166,8 +167,6 @@ namespace Ebuy.Data.Migrations
                         .HasMaxLength(50);
 
                     b.Property<decimal>("Price");
-
-                    b.Property<int>("QuantityInStock");
 
                     b.Property<double?>("Rating");
 

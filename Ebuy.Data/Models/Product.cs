@@ -1,6 +1,7 @@
 ﻿namespace Ebuy.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using Ebuy.Data.Models.Contracts;
@@ -18,19 +19,24 @@
 
         public decimal Price { get; set; }
 
-        public byte[] Picture { get; set; }
+        public string ImageName { get; set; }
 
         [MaxLength(1000)]
         public string Description { get; set; }
 
         public double? Rating { get; set; }
 
+        [DefaultValue(1)]
+        public int QuantityInStock { get; set; }
+
         [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
 
-        public List<SellerProduct> Sellers { get; set; } = new List<SellerProduct>();
+        public int SellerId { get; set; }
+
+        public Seller Seller { get; set; }
 
         public List<CustomerProduct> Buyers { get; set; } = new List<CustomerProduct>();
     }

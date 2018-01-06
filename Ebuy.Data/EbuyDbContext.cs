@@ -26,8 +26,6 @@
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<SellerProduct> SellerProducts { get; set; }
-
         public DbSet<CustomerProduct> CustomerProducts { get; set; }
 
         public DbSet<Address> Addresses { get; set; }
@@ -35,20 +33,10 @@
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder
-                .Entity<SellerProduct>()
-                .HasKey(sp => new {sp.SellerId, sp.ProductId});
-
-            builder
-                .Entity<SellerProduct>()
-                .HasOne(sp => sp.Seller)
+                .Entity<Product>()
+                .HasOne(p => p.Seller)
                 .WithMany(s => s.Products)
-                .HasForeignKey(sp => sp.SellerId);
-
-            builder
-                .Entity<SellerProduct>()
-                .HasOne(sp => sp.Product)
-                .WithMany(p => p.Sellers)
-                .HasForeignKey(sp => sp.ProductId);
+                .HasForeignKey(p => p.SellerId);
 
             builder
                 .Entity<CustomerProduct>()

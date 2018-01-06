@@ -1,13 +1,13 @@
 ﻿namespace Ebuy.Web.Areas.Products.Controllers
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Ebuy.Data.Models;
     using Ebuy.Services.Data.Products;
     using Ebuy.Web.Areas.Products.Models.ShoppingCart;
     using Ebuy.Web.Common;
     using Ebuy.Web.Common.Extensions;
     using Ebuy.Web.Controllers;
-    using Microsoft.ApplicationInsights.AspNetCore.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +21,11 @@
         {
             this.productsData = productsData;
             this.userManager = userManager;
+        }
+
+        public IActionResult Checkout()
+        {
+            return this.View();
         }
 
         public IActionResult Index()
@@ -39,7 +44,7 @@
         }
 
         [HttpPost]
-        public IActionResult AddToCart(int productId)
+        public async Task<IActionResult> AddToCart(int productId)
         {
             var product = this.productsData.GetById(productId);
 
@@ -54,11 +59,14 @@
 
             if (cart == null)
             {
-                var user = this.userManager.GetUserAsync(this.User);
-                cart = new ShoppingCartViewModel
+                cart = new ShoppingCartViewModel();
+
+                var user = await this.userManager.GetUserAsync(this.User);
+                
+                if (user != null)
                 {
-                    UserId = user.Id
-                };            
+                    cart.UserId = user.Id;
+                }
             }
 
             if (cart.CartItems.All(item => item.ProductId != productId))

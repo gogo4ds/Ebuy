@@ -3,6 +3,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Reflection;
+    using System.Threading.Tasks;
     using Ebuy.Data;
     using Ebuy.Data.Models;
     using Microsoft.EntityFrameworkCore;
@@ -28,13 +29,19 @@
             this.Context.SaveChanges();
         }
 
+        public async Task<int> UpdateAsync(TModel entity)
+        {
+            this.Repository.Update(entity);
+            return await this.Context.SaveChangesAsync();
+        }
+
         public void Delete(TModel entity)
         {
             this.Repository.Remove(entity);
             this.Context.SaveChanges();
         }
 
-        public void AddOrUpdate(TModel entity)
+        public async Task<int> AddOrUpdateAsync(TModel entity)
         {
             var t = typeof(TModel);
             PropertyInfo keyField = null;
@@ -60,7 +67,7 @@
                 this.Repository.Update(entity);
             }
             
-            this.Context.SaveChanges();
+            return await this.Context.SaveChangesAsync();
         }
 
         private dynamic GetRepository()

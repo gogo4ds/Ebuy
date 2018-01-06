@@ -5,9 +5,10 @@
 }
 
 <h2>Add new product to the category <strong>@Model.CategoryName</strong></h2>
-<form asp-action="Create" asp-controller="Products" asp-area="Products" method="post">
-    <input type="hidden" asp-for="CategoryId"/>
-    <input type="hidden" asp-for="CategoryName"/>
+<form asp-action="Create" asp-controller="Products" asp-area="Products" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="CategoryId" />
+    <input type="hidden" asp-for="CategoryName" />
+    <input type="hidden" asp-for="SellerId" />
 
     <div class="form-group">
         <label asp-for="Name">Name</label>
@@ -28,5 +29,18 @@
         <br />
     </div>
 
-    <input type="submit" class="btn btn-success" value="Create"/>
+    <div class="form-group">
+        <label asp-for="Description">Description</label>
+        <input class="form-control" asp-for="Description" />
+        <span asp-validation-for="Description"></span>
+        <br />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageName">Image</label>
+        <input type="file" class="form-control" asp-for="ImageName" />
+        <br />
+    </div>
+
+    <input type="submit" class="btn btn-success" value="Create" />
 </form>

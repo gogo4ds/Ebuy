@@ -47,4 +47,8 @@
     <ProjectReference Include="..\Ebuy.Web.Common\Ebuy.Web.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\img\products\" />
+  </ItemGroup>
+
 </Project>

@@ -9,6 +9,10 @@
     {
         public int Id { get; set; }
 
+        public int? SellerId { get; set; }
+
+        public string SellerUserName { get; set; }
+
         [MinLength(2), MaxLength(100)]
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
@@ -26,11 +30,20 @@
         [StringLength(100, ErrorMessage = "Brand Name must be in range 2 and 100 symbols")]
         public string BrandName { get; set; }
 
+        [StringLength(1000)]
+        public string Description { get; set; }
+
+        public string ImageName { get; set; }
+
         public void ConfigureMapping(Profile mapper)
         {
             mapper
                 .CreateMap<Product, ProductViewModel>()
                 .ForMember(m => m.CategoryName, opt => opt.MapFrom(p => p.Category.Name));
+
+            mapper
+                .CreateMap<Product, ProductViewModel>()
+                .ForMember(m => m.SellerUserName, opt => opt.MapFrom(p => p.Seller.User.UserName));
         }
     }
 }

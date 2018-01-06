@@ -13,5 +13,7 @@
         public const string TempDataInfoMessageKey = "InfoMessage";
 
         public const string ShoppingCartSessionKey = "#%ShoppingCart%#";
+
+        public const string NoPrivillegesMessage = "You have no privilegues for this action";
     }
 }
