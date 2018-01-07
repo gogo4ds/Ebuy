@@ -90,6 +90,8 @@
 
             if (typeof(TModel) == typeof(Seller)) { return this.Context.Sellers; }
 
+            if (typeof(TModel) == typeof(Image)) { return this.Context.Images; }
+
             return null;
         }
     }

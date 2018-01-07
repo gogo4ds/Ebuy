@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AdminUsersListingViewModel>
+﻿@model UsersListingViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -16,15 +16,28 @@
     <tbody>
         @{
             var count = 1;
-            foreach (var user in Model)
+            foreach (var user in Model.Users)
             {
-        <tr>
-            <th scope="row">@(count++)</th>
-            <td>@user.UserName</td>
-            <td>@user.Email</td>
-            <td>@user.Email</td>
-            <td><button class="btn-default">Edit</button></td>
-        </tr>
+                <tr>
+                    <th scope="row">@(count++)</th>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <form asp-action="AddToRole" method="post">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="hidden" name="UserId" value="@user.Id" />
+                                    <select name="Role" asp-items="Model.Roles" class="form-control"></select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input class="btn btn-sm btn-primary" type="submit" value="Add To Role" />
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                    <td><button class="btn-default">Edit</button></td>
+                </tr>
             }
         }
     </tbody>

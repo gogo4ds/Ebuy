@@ -42,7 +42,7 @@
         {
             <div class="col-xs-3">
                 <img style="width: 100%" src="~/uploads/img/products/@image" alt="Product image">
-                <span data-image="@image" class="btn text-danger remove-image-btn">Remove</span>
+                <span data-image="@image" class="btn text-danger">Remove</span>
             </div>
         }
     </div>
@@ -62,9 +62,7 @@
         $(function() {
             $('.remove-image-btn').click(function () {
                 var imageId = $(this).attr('data-image');
-                var option = $('#images-hidden-select option[value="' + imageId + '"]');
-
-                console.log(option);
+                
                 $('#images-hidden-select option[value="' + imageId + '"]').attr("selected", true);
                 $(this).parent().hide();
             });
