@@ -2,14 +2,17 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper.QueryableExtensions;
     using Ebuy.Data.Models;
     using Ebuy.Services.Data.Products;
+    using Ebuy.Web.Areas.Products.Models;
     using Ebuy.Web.Areas.Products.Models.ShoppingCart;
     using Ebuy.Web.Common;
     using Ebuy.Web.Common.Extensions;
     using Ebuy.Web.Controllers;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
     [Area(WebConstants.Products)]
     public class ShoppingCartController : BaseController
@@ -45,7 +48,10 @@
         [HttpPost]
         public async Task<IActionResult> AddToCart(int productId)
         {
-            var product = this.productsData.GetById(productId);
+            var product = await this.productsData
+                .GetByIdQuery(productId)
+                .ProjectTo<ProductViewModel>()
+                .FirstOrDefaultAsync();
 
             if (product == null)
             {
