@@ -24,7 +24,7 @@
         [MaxLength(1000)]
         public string Description { get; set; }
 
-        public double? Rating { get; set; }
+        public double? Rating { get; set; }     
 
         [DefaultValue(1)]
         public int QuantityInStock { get; set; }
@@ -39,5 +39,7 @@
         public Seller Seller { get; set; }
 
         public List<CustomerProduct> Buyers { get; set; } = new List<CustomerProduct>();
+
+        public List<Review> Reviews { get; set; } = new List<Review>();
     }
 }

@@ -5,6 +5,7 @@
     using System.Linq;
     using AutoMapper;
     using Ebuy.Data.Models;
+    using Ebuy.Web.Areas.Administration.Models.Reviews;
     using Ebuy.Web.Infrastructure.Mapping;
 
     public class ProductViewModel : IMapFrom<Product>, IHaveCustomMapping
@@ -36,6 +37,8 @@
         public string Description { get; set; }
 
         public List<string> ImageNames { get; set; }
+
+        public ReviewViewModel Review { get; set; }
 
         public void ConfigureMapping(Profile mapper)
         {

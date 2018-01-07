@@ -18,6 +18,12 @@
         public Seller GetSellerByUserId(string userId) =>
             this.sellers.FirstOrDefault(s => s.UserId == userId);
 
+        public string GetSellerUserNameByProductId(int productId) =>
+            this.sellers
+                .Where(s => s.Products.Any(p => p.Id == productId))
+                .Select(s => s.User.UserName)
+                .FirstOrDefault();
+
         public async Task<Seller> CreateAsyncByUserId(string userId)
         {
             var seller = new Seller { UserId = userId };

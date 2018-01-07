@@ -16,5 +16,7 @@
         Task<int> DeleteByIdAsync(int productId);
 
         Task<List<string>> GetImageNamesByIdAsync(int productId);
+
+        Task<bool> ExistsById(int productId);
     }
 }

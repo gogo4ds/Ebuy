@@ -91,6 +91,13 @@
                 .WithMany(a => a.Reviews)
                 .HasForeignKey(r => r.UserId);
 
+            builder
+                .Entity<Review>()
+                .HasOne(r => r.Product)
+                .WithMany(p => p.Reviews)
+                .HasForeignKey(r => r.ProductId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             // Category
             builder.Entity<Category>()
                 .HasOne(p => p.Parent)

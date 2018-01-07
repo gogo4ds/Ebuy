@@ -36,5 +36,8 @@
                 .Where(p => p.Id == productId)
                 .SelectMany(p => p.Images.Select(i => i.Image.Title))
                 .ToListAsync();
+
+        public async Task<bool> ExistsById(int productId) =>
+            await this.products.FirstOrDefaultAsync(p => p.Id == productId) != null;
     }
 }

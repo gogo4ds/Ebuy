@@ -9,5 +9,8 @@
 
         public static bool IsAdmin(this ClaimsPrincipal user) =>
             user.IsInRole(WebConstants.AdministratorRole);
+
+        public static bool IsReviewer(this ClaimsPrincipal user) =>
+            user.IsInRole(WebConstants.ReviewerRole);
     }
 }

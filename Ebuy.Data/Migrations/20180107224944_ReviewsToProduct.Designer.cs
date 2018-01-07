@@ -11,9 +11,10 @@ using System;
 namespace Ebuy.Data.Migrations
 {
     [DbContext(typeof(EbuyDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180107224944_ReviewsToProduct")]
+    partial class ReviewsToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

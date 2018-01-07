@@ -6,6 +6,8 @@
     {
         Seller GetSellerByUserId(string userId);
 
+        string GetSellerUserNameByProductId(int productId);
+
         Task<Seller> CreateAsyncByUserId(string userId);
     }
 }

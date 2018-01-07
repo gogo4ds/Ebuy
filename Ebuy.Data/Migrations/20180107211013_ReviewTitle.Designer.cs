@@ -11,9 +11,10 @@ using System;
 namespace Ebuy.Data.Migrations
 {
     [DbContext(typeof(EbuyDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180107211013_ReviewTitle")]
+    partial class ReviewTitle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -510,9 +511,9 @@ namespace Ebuy.Data.Migrations
             modelBuilder.Entity("Ebuy.Data.Models.Review", b =>
                 {
                     b.HasOne("Ebuy.Data.Models.Product", "Product")
-                        .WithMany("Reviews")
+                        .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Ebuy.Data.Models.User", "Author")
                         .WithMany("Reviews")

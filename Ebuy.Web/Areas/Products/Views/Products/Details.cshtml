@@ -1,4 +1,8 @@
-﻿@model ProductViewModel
+﻿@using Ebuy.Services.Data.Sellers
+
+@model ProductViewModel
+    
+@inject ISellersDataService SellersData
 
 @{
     ViewData["Title"] = "Details";
@@ -54,8 +58,10 @@
         </div>
     </div>
 </div>
-
-@if (Model.SellerUserName == this.User.Identity.Name || this.User.IsAdmin())
+@{
+    var sellerName = this.SellersData.GetSellerUserNameByProductId(Model.Id);
+}
+@if (sellerName == this.User.Identity.Name || this.User.IsAdmin())
 {
     <div class="row edit-controls">
         <a class="btn btn-primary col-xs-6" asp-action="Edit" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Id">Edit</a>
