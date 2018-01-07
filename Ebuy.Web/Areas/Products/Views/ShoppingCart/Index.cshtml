@@ -34,10 +34,8 @@
                 <div class="product-quantity">
                     <input asp-for="@item.Quantity" type="number" value="@item.Quantity" min="1">
                 </div>
-                <div class="product-removal">
-                    <span class="remove-product">
-                        Remove
-                    </span>
+                <div class="product-removal">      
+                    <span data-val="@item.ProductId" class="remove-product">Remove</span>
                 </div>
                 <div class="product-line-price">@item.Price</div>
             </div>

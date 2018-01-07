@@ -21,8 +21,8 @@ body > .container #product-details-container {
 .left-column img {
     width: 100%;
     transition: all 0.3s ease;
-    text-align: center;
-    align-items: center;
+    top: 0;
+    left: 0;
 }
 
 /* Product Description */
@@ -150,11 +150,19 @@ body > .container #product-details-container {
         top: -65px;
         left: initial;
     }
+
+    .left-column {
+        margin: 30px 50px 20px 0;
+    }
 }
  
 @media (max-width: 535px) {
     .left-column img {
         width: 220px;
         top: -85px;
+    }
+
+    .left-column {
+        margin: 30px 50px 20px 0;
     }
 }

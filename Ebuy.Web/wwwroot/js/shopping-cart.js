@@ -63,8 +63,13 @@
         /* Remove row from DOM and recalc cart total */
         var productRow = $(removeButton).parent().parent();
         productRow.slideUp(fadeTime, function () {
-            productRow.remove();
+            productRow.remove();            
             recalculateCart();
+            setTimeout(function () {
+                var productToRemoveId = $(removeButton).attr("data-val");
+                var url = "http://localhost:53754/products/shoppingcart/removefromcart?productId=" + productToRemoveId;
+                $(location).attr("href", url);
+            }, 300);
         });
     }
 });

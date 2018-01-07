@@ -1,6 +1,7 @@
 ﻿namespace Ebuy.Web.Areas.Products.Controllers
 {
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using AutoMapper.QueryableExtensions;
     using Ebuy.Data.Models;
@@ -10,6 +11,7 @@
     using Ebuy.Web.Common;
     using Ebuy.Web.Common.Extensions;
     using Ebuy.Web.Controllers;
+    using Microsoft.ApplicationInsights.AspNetCore.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -39,6 +41,11 @@
             if (cart == null || cart.CartItems.Count == 0)
             {               
                 this.TempData.AddInfoMessage("The Shopping Cart is empty");
+                if (this.HttpContext.Request.Headers["Referer"].ToString() == this.HttpContext.Request.GetUri().AbsoluteUri)
+                {
+                    return this.View(new ShoppingCartViewModel());
+                }
+
                 return this.RedirectBack();
             }
 
@@ -85,13 +92,30 @@
             }
             else
             {
-                cart.CartItems.First(item => item.ProductId == productId).Quantity++;
+                this.TempData.AddInfoMessage("Item is already in the cart");
+                return this.RedirectBack();
             }
 
             this.HttpContext.Session.SetObjectAsJson(WebConstants.ShoppingCartSessionKey, cart);
 
             this.TempData.AddSuccessMessage("Item added to cart");
             return this.RedirectToAction("Products", "Categories", new {area = "Products", id = product.CategoryId });
+        }
+
+        public IActionResult RemoveFromCart(int productId)
+        {           
+            var cart = this.HttpContext.Session
+                .GetObjectFromJson<ShoppingCartViewModel>(WebConstants.ShoppingCartSessionKey);
+
+            if (cart != null)
+            {
+                var product = cart.CartItems.FirstOrDefault(ci => ci.Product.Id == productId);
+                cart.CartItems.Remove(product);
+            }
+
+            this.HttpContext.Session.SetObjectAsJson(WebConstants.ShoppingCartSessionKey, cart);
+
+            return this.RedirectToAction("Index", "ShoppingCart");
         }
     }
 }

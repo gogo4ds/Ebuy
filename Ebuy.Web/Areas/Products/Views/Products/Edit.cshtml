@@ -9,6 +9,7 @@
     <input type="hidden" asp-for="CategoryId" />
     <input type="hidden" asp-for="CategoryName" />
     <input type="hidden" asp-for="SellerId" />
+    <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
         <label asp-for="Name">Name</label>
@@ -35,27 +36,37 @@
         <span asp-validation-for="Description"></span>
         <br />
     </div>
-    
-    @foreach (var imageName in Model.ImageNames)
-    {
-        <img src="~/uploads/img/products/@imageName" alt="Product image">
-        <span class="btn" id="remove-image-btn">Remove</span>
-    }
+
+    <div class="row">
+        @foreach (var image in Model.ImageNames)
+        {
+            <div class="col-xs-3">
+                <img style="width: 100%" src="~/uploads/img/products/@image" alt="Product image">
+                <span data-image="@image" class="btn text-danger remove-image-btn">Remove</span>
+            </div>
+        }
+    </div>
+    <br />
 
     <div class="form-group">
         <label asp-for="ImageNames">Add Images</label>
-        <input type="file" class="form-control" asp-for="ImageNames" multiple="multiple"/>
+        <input type="file" class="form-control" asp-for="ImageNames" multiple="multiple" />
         <br />
     </div>
 
-    <input type="submit" class="btn btn-success" value="Create" />
+    <input type="submit" class="btn btn-success" value="Save" />
 </form>
 
 @section Scripts{ 
     <script>
         $(function() {
-            $('#remove-image-btn').click(function() {
-                alert("remove img");
+            $('.remove-image-btn').click(function () {
+                var imageId = $(this).attr('data-image');
+                var option = $('#images-hidden-select option[value="' + imageId + '"]');
+
+                console.log(option);
+                $('#images-hidden-select option[value="' + imageId + '"]').attr("selected", true);
+                $(this).parent().hide();
             });
         })
     </script>

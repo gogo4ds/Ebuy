@@ -1,5 +1,6 @@
 ﻿namespace Ebuy.Services.Data.Products
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Ebuy.Data;
@@ -29,5 +30,11 @@
             this.products.Remove(product);
             return await this.Context.SaveChangesAsync();
         }
+
+        public async Task<List<string>> GetImageNamesByIdAsync(int productId) =>
+            await this.products
+                .Where(p => p.Id == productId)
+                .SelectMany(p => p.Images.Select(i => i.Image.Title))
+                .ToListAsync();
     }
 }

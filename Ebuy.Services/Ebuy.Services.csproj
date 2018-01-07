@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ebuy.Data\Ebuy.Data.csproj" />
+    <ProjectReference Include="..\Ebuy.Web.Common\Ebuy.Web.Common.csproj" />
   </ItemGroup>
 
 </Project>

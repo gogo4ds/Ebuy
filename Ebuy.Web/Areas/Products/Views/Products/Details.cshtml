@@ -10,7 +10,7 @@
     
     <!-- Left Column -->
     <div class="left-column">
-        <img data-image="@Model.ImageNames.FirstOrDefault()" src="~/uploads/img/products/@(Model.ImageNames.FirstOrDefault())" alt="Product image"/>
+        <img data-image="@(Model.ImageNames.FirstOrDefault())" src="~/uploads/img/products/@(Model.ImageNames.FirstOrDefault())" alt="Product image"/>
 
         @foreach (var imageName in Model.ImageNames.Skip(1))
         {

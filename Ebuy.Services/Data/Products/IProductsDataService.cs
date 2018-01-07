@@ -1,5 +1,6 @@
 ﻿namespace Ebuy.Services.Data.Products
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Ebuy.Data.Models;
@@ -13,5 +14,7 @@
         IQueryable<Product> GetByIdQuery(int productId);
 
         Task<int> DeleteByIdAsync(int productId);
+
+        Task<List<string>> GetImageNamesByIdAsync(int productId);
     }
 }

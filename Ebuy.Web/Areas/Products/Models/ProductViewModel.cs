@@ -49,7 +49,7 @@
 
             mapper
                 .CreateMap<Product, ProductViewModel>()
-                .ForMember(m => m.ImageNames, opt => opt.MapFrom(p => p.Images.Select(i => i.Image.Title)));
+                .ForMember(m => m.ImageNames, opt => opt.MapFrom(p =>  p.Images.Select(i => i.Image.Title)));
         }
     }
 }
