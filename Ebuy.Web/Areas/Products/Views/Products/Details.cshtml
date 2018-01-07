@@ -4,19 +4,51 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details for product: @Model.Name</h2>
-<br/>
-<form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@Model.Id" method="post">
-    <input type="submit" value="Add to cart" class="btn btn-success text-uppercase" />
-</form>
+<link rel="stylesheet" href="~/css/product-details.css" />
 
-<div class="row">
-    <div class="col-xs-6">
-        <h3>@Model.Name</h3>
+<div id="product-details-container">
+    <!-- Left Column -->
+    <div class="left-column">
+        <img data-image="@Model.ImageNames.FirstOrDefault()" src="~/uploads/img/products/@(Model.ImageNames.FirstOrDefault())" alt="Product image" checked/>
+
+        @foreach (var imageName in Model.ImageNames.Skip(1))
+        {
+            <img data-image="@imageName" src="~/uploads/img/products/@imageName" alt="Product image"/>
+        }
     </div>
-    <p>@Model.Description</p>
+
+    <!-- Right Column -->
+    <div class="right-column">
+
+        <!-- Product Description -->
+        <div class="product-description">
+            <span>@Model.CategoryName</span>
+            <h1>@Model.Name</h1>
+            <p>@Model.Description</p>
+        </div>
+
+        <!-- Product Images -->
+        <div class="product-images">               
+            <br/>
+            <div class="image-choose">                  
+                @foreach (var imageName in Model.ImageNames)
+                {
+                    <div style="width: 120px" class="style_prevu_kit">
+                        <img src="~/uploads/img/products/@imageName" alt="product image"/>
+                    </div>
+                }                                        
+            </div>
+        </div>
+
+        <!-- Product Pricing -->
+        <div class="product-price">
+            <span>@Model.Price$</span>
+            <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@Model.Id" method="post">
+                <input type="submit" value="Add to cart" class="cart-btn text-uppercase" />
+            </form>
+        </div>
+    </div>
 </div>
-<br/>
 
 @if (Model.SellerUserName == this.User.Identity.Name || this.User.IsAdmin())
 {
@@ -25,4 +57,18 @@
         <span class="col-xs-1"></span>
         <a class="text-danger btn col-xs-1" asp-action="Delete" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Id">Delete</a>
     </div>
+}
+
+@section Scripts{     
+    <script>
+        $(document).ready(function() {
+            $('.color-choose input').on('click', function() {
+                var headphonesColor = $(this).attr('data-image');
+ 
+                $('.active').removeClass('active');
+                $('.left-column img[data-image = ' + headphonesColor + ']').addClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
 }
