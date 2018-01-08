@@ -1,7 +1,7 @@
 ﻿@using Ebuy.Services.Data.Sellers
 
-@model ProductViewModel
-    
+@model ProductReviewsViewModel
+
 @inject ISellersDataService SellersData
 
 @{
@@ -11,14 +11,14 @@
 <link rel="stylesheet" href="~/css/product-details.css" />
 
 <div id="product-details-container">
-    
+
     <!-- Left Column -->
     <div class="left-column">
-        <img data-image="@(Model.ImageNames.FirstOrDefault())" src="~/uploads/img/products/@(Model.ImageNames.FirstOrDefault())" alt="Product image"/>
+        <img data-image="@(Model.Product.ImageNames.FirstOrDefault())" src="~/uploads/img/products/@(Model.Product.ImageNames.FirstOrDefault())" alt="Product image" />
 
-        @foreach (var imageName in Model.ImageNames.Skip(1))
+        @foreach (var imageName in Model.Product.ImageNames.Skip(1))
         {
-            <img data-image="@imageName" src="~/uploads/img/products/@imageName" alt="Product image" hidden/>
+            <img data-image="@imageName" src="~/uploads/img/products/@imageName" alt="Product image" hidden />
         }
     </div>
 
@@ -28,22 +28,22 @@
         <!-- Product Description -->
         <div class="product-description">
             <span>
-                <a asp-action="Products" asp-controller="Categories" asp-area="Products" asp-route-id="@Model.CategoryId">
-                    @Model.CategoryName
+                <a asp-action="Products" asp-controller="Categories" asp-area="Products" asp-route-id="@Model.Product.CategoryId">
+                    @Model.Product.CategoryName
                 </a>
             </span>
-            <h1>@Model.Name</h1>
-            <p>@Model.Description</p>
+            <h1>@Model.Product.Name</h1>
+            <p>@Model.Product.Description</p>
         </div>
 
         <!-- Product Images -->
         <div class="product-images">
-            <br/>
+            <br />
             <div class="image-choose">
-                @foreach (var imageName in Model.ImageNames)
+                @foreach (var imageName in Model.Product.ImageNames)
                 {
                     <div style="width: 120px" class="style_prevu_kit">
-                        <img data-image="@imageName" src="~/uploads/img/products/@imageName" alt="product image"/>
+                        <img data-image="@imageName" src="~/uploads/img/products/@imageName" alt="product image" />
                     </div>
                 }
             </div>
@@ -51,31 +51,40 @@
 
         <!-- Product Pricing -->
         <div class="product-price">
-            <span>@Model.Price$</span>
-            <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@Model.Id" method="post">
-                <input type="submit" value="Add to cart" class="cart-btn text-uppercase"/>
+            <span>@Model.Product.Price$</span>
+            <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-area="Products" asp-route-productId="@Model.Product.Id" method="post">
+                <input type="submit" value="Add to cart" class="cart-btn text-uppercase" />
             </form>
         </div>
     </div>
 </div>
 @{
-    var sellerName = this.SellersData.GetSellerUserNameByProductId(Model.Id);
+    var sellerName = this.SellersData.GetSellerUserNameByProductId(Model.Product.Id);
 }
 @if (sellerName == this.User.Identity.Name || this.User.IsAdmin())
 {
     <div class="row edit-controls">
-        <a class="btn btn-primary col-xs-6" asp-action="Edit" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Id">Edit</a>
-        <a class="text-danger btn col-xs-6" asp-action="Delete" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Id">Delete</a>
+        <a class="btn btn-primary col-xs-5" asp-action="Edit" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Product.Id">Edit</a>
+        <span class="col-xs-2"></span>
+        <a class="text-danger btn btn-danger col-xs-5" asp-action="Delete" asp-controller="Products" asp-area="Products" asp-route-id="@Model.Product.Id">Delete</a>
     </div>
 }
 
-@section Scripts{     
+@await Html.PartialAsync("_ReviewsPartial")
+
+@if(this.User.IsReviewer() || this.User.IsAdmin())
+{
+    var title = Model.Reviews.Any() ? "Add Review" : "Add the first review";
+    <a asp-action="Create" asp-controller="Reviews" asp-area="Administration" asp-route-productId="@Model.Product.Id" class="btn btn-primary">@title</a>
+}
+
+@section Scripts{
     <script>
-        $(document).ready(function() {
-            $('.image-choose img').on('click', function () {                
+        $(document).ready(function () {
+            $('.image-choose img').on('click', function () {
                 var imageName = $(this).attr('data-image');
                 $('.left-column img').hide();
-                $('.left-column img[data-image="' + imageName +'" ]').show();
+                $('.left-column img[data-image="' + imageName + '" ]').show();
             });
         });
     </script>

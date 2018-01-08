@@ -8,7 +8,9 @@
     using Ebuy.Services.Data.Categories;
     using Ebuy.Services.Data.Images;
     using Ebuy.Services.Data.Products;
+    using Ebuy.Services.Data.Reviews;
     using Ebuy.Services.Data.Sellers;
+    using Ebuy.Web.Areas.Administration.Models.Reviews;
     using Ebuy.Web.Areas.Products.Models;
     using Ebuy.Web.Areas.Products.Models.Products;
     using Ebuy.Web.Common;
@@ -28,6 +30,7 @@
         private readonly ICategoriesDataService categoriesData;
         private readonly ISellersDataService sellersData;
         private readonly IImagesDataService imagesData;
+        private readonly IReviewsDataService reviewsData;
         private readonly IHostingEnvironment appEnvironment;
 
         public ProductsController(
@@ -35,12 +38,14 @@
             ICategoriesDataService categoriesData,
             ISellersDataService sellersData,
             IImagesDataService imagesData,
+            IReviewsDataService reviewsData,
             IHostingEnvironment appEnvironment)
         {
             this.productsData = productsData;
             this.categoriesData = categoriesData;
             this.sellersData = sellersData;
             this.imagesData = imagesData;
+            this.reviewsData = reviewsData;
             this.appEnvironment = appEnvironment;
         }
 
@@ -160,11 +165,27 @@
             return this.RedirectToAction("Products", "Categories", new { id = model.CategoryId, area = "Products"});
         }
 
-        public async Task<IActionResult> Details(int id) =>
-            this.View(await this.productsData
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await this.productsData
                 .GetByIdQuery(id)
                 .ProjectTo<ProductViewModel>()
-                .FirstOrDefaultAsync());
+                .FirstOrDefaultAsync();
+
+            var reviews = await this.reviewsData
+                .GetByProductIdQuery(id)
+                .ProjectTo<ReviewViewModel>()
+                .ToListAsync();
+
+            var model = new ProductReviewsViewModel
+            {
+                Product = product,
+                Reviews = reviews
+            };
+
+            return this.View(model);
+        }
+            
 
         public async Task<IActionResult> Edit(int id)
         {

@@ -1,6 +1,7 @@
 ﻿namespace Ebuy.Services.Data.Reviews
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using Ebuy.Data;
     using Ebuy.Data.Models;
@@ -27,5 +28,8 @@
 
             await this.Context.SaveChangesAsync();
         }
+
+        public IQueryable<Review> GetByProductIdQuery(int productId) =>
+            this.Repository.Where(r => r.ProductId == productId);
     }
 }

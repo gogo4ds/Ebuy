@@ -14,6 +14,7 @@
 
         public int ProductId { get; set; }
 
+        [Range(0, 10)]
         public double Score { get; set; }
     }
 }

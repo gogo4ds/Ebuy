@@ -75,6 +75,11 @@
                 return this.RedirectBack();
             }
 
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
             await this.reviewsData.CreateAsync(
                 model.Review.ProductId,
                 model.Review.Title,

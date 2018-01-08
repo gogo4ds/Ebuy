@@ -1,0 +1,26 @@
+﻿@model ProductReviewsViewModel
+
+<h2>Reviews</h2>
+
+<style>
+    .review-container {
+        margin-bottom: 15px;
+        background-color: #f4f7f7;
+        padding: 20px;
+    }
+
+    .review-container span{
+        display: block;
+        font-size: 1.2em;
+    }
+</style>
+
+@foreach (var review in Model.Reviews)
+{
+    <div class="review-container">
+        <h3>@review.Title</h3>
+        <p>@review.Content</p>
+        <br/>
+        <span>Rating: @review.Score/10</span>
+    </div>
+}
